@@ -1,6 +1,5 @@
-import { TelemetryLogger, TerminalOptions } from "vscode";
 import { ExtensionBrokerImpl } from "../extension-broker";
-import vscode, { Disposable } from "vscode";
+import vscode, { Disposable, TelemetryLogger, TerminalOptions } from "vscode";
 import { checkLogin } from "../core/user";
 import { DATA_CONNECT_EVENT_NAME } from "../analytics";
 import { getSettings } from "../utils/settings";
@@ -97,10 +96,12 @@ export function registerTerminalTasks(
       { focus: false },
     );
   });
+  const startEmulatorsCommand = vscode.commands.registerCommand("firebase.emulators.start", startEmulatorsTaskBroker);
 
   return Disposable.from(
     { dispose: loginTaskBroker },
     { dispose: startEmulatorsTaskBroker },
+    startEmulatorsCommand,
     vscode.commands.registerCommand(
       "firebase.dataConnect.runTerminalTask",
       (taskName, command) => {
