@@ -255,7 +255,6 @@ export function registerFdc(
       [{ scheme: "file", language: "yaml", pattern: "**/connector.yaml" }],
       configureSdkCodeLensProvider,
     ),
-    refreshCommand,
     {
       dispose: () => {
         client.stop();
