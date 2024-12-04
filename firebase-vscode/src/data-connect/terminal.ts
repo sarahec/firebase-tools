@@ -84,7 +84,7 @@ export function registerTerminalTasks(
     });
   });
 
-  const startEmulatorsTaskBroker = broker.on("runStartEmulators", () => {
+  const startEmulatorsTask = () => {
     telemetryLogger.logUsage(DATA_CONNECT_EVENT_NAME.START_EMULATORS, {
       firebase_binary_kind: settings.firebaseBinaryKind,
     });
@@ -95,8 +95,14 @@ export function registerTerminalTasks(
       // emulators:start almost never ask interactive questions.
       { focus: false },
     );
+  };
+  const startEmulatorsTaskBroker = broker.on("runStartEmulators", () => {
+    startEmulatorsTask();
   });
-  const startEmulatorsCommand = vscode.commands.registerCommand("firebase.emulators.start", startEmulatorsTaskBroker);
+  const startEmulatorsCommand = vscode.commands.registerCommand(
+    "firebase.emulators.start",
+    startEmulatorsTask,
+  );
 
   return Disposable.from(
     { dispose: loginTaskBroker },

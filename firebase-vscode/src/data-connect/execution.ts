@@ -111,7 +111,7 @@ export function registerExecution(
         telemetryLogger.logUsage(
           DATA_CONNECT_EVENT_NAME.START_EMULATOR_FROM_EXECUTION,
         );
-        await vscode.commands.executeCommand("firebase.emulators.start");
+        emulatorsController.startEmulators();
       } else {
         telemetryLogger.logUsage(
           DATA_CONNECT_EVENT_NAME.REFUSE_START_EMULATOR_FROM_EXECUTION,
